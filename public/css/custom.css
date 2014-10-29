@@ -1,0 +1,20 @@
+
+
+form {
+    width: 50%;
+    display: table;
+}
+
+form input[type="text"], form input[type="email"], form input[type="password"], form label, form textarea, form select{
+    width: 100%;
+    float: left;
+    margin: 5px 0;
+}
+
+form span, form input[type="submit"]{
+    float: left;
+}
+form span{
+    margin-right: 10px;
+}
+
