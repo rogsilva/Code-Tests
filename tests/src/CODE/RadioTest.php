@@ -24,7 +24,10 @@ class RadioTest extends \PHPUnit_Framework_TestCase
      */
     public function testVerificaRetornoExceptionMetodoAdd()
     {
-        $element1 = new \CODE\Form\Elements\Text('Teste');
+        $element1 = $this->getMockBuilder('\CODE\Form\Elements\Text')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
         $element2 = new \CODE\Form\Elements\Radio('teste','Teste', 1);
 
         $element2->add($element1);

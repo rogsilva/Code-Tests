@@ -52,7 +52,7 @@ $formCadastro->add($submit);
 $dados = [
             "nome"=>"",
             "descricao"=>"Lorem Ipsum ...",
-            "valor" => 'a12.99',
+            "valor" => 12.99,
         ];
 
 $formCadastro->populate($dados);
@@ -92,7 +92,7 @@ $formCadastro->getValidator()->addRule(
     )
 );
 
-$formCadastro->getValidator()->validate();
+var_dump($formCadastro->getValidator()->validate());
 
 ?>
 <!DOCTYPE html>

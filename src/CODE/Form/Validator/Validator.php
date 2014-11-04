@@ -35,6 +35,12 @@ class Validator implements ValidatorInterface
             }
 
         }
+
+        if(count($this->messages) == 0){
+            return true;
+        }
+
+        return false;
     }
 
     public function addRule(Array $rule)
