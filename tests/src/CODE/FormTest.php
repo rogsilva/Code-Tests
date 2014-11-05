@@ -11,11 +11,19 @@ namespace CODE;
 
 class FormTest extends \PHPUnit_Framework_TestCase{
 
+    private $validator;
+
+    public function setUp(){
+        $this->validator = new \CODE\Form\Validator\Validator();
+    }
+
+    public function tearDown(){
+        $this->validator = null;
+    }
+
     public function testVerificaTipoDaInterface()
     {
-        $validator = $this->getMock('CODE\Form\Validator\Validator');
-
-        $this->assertInstanceOf('CODE\Form\Interfaces\FormInterface', new \CODE\Form\Form($validator));
+        $this->assertInstanceOf('CODE\Form\Interfaces\FormInterface', new \CODE\Form\Form($this->validator));
     }
 
 } 

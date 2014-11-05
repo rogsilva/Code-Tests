@@ -12,6 +12,16 @@ namespace CODE;
 class TextAreaTest extends \PHPUnit_Framework_TestCase
 {
 
+    private $aux;
+
+    public function setUp(){
+        $this->aux = new \CODE\Form\Elements\Text('teste');
+    }
+
+    public function tearDown(){
+        $this->aux = null;
+    }
+
     public function testVerificaTipoDaClasse()
     {
         $this->assertInstanceOf('CODE\Form\Elements\Interfaces\ElementsInterface', new \CODE\Form\Elements\TextArea('Teste'));
@@ -24,13 +34,8 @@ class TextAreaTest extends \PHPUnit_Framework_TestCase
      */
     public function testVerificaRetornoExceptionMetodoAdd()
     {
-        $element1 = $this->getMockBuilder('\CODE\Form\Elements\Text')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
         $element2 = new \CODE\Form\Elements\TextArea('teste');
-
-        $element2->add($element1);
+        $element2->add($this->aux);
     }
 
 } 

@@ -12,6 +12,16 @@ namespace CODE;
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    private $aux;
+
+    public function setUp(){
+        $this->aux = new \CODE\Form\Elements\Text('teste', 'teste');
+    }
+
+    public function tearDown(){
+        $this->aux = null;
+    }
+
     public function testVerificaTipoDaInterface()
     {
         $this->assertInstanceOf('CODE\Form\Interfaces\ValidatorInterface', new \CODE\Form\Validator\Validator());
@@ -21,20 +31,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     public function testVerificaRetornoMetodoValidate()
     {
 
-        $element = $this->getMockBuilder('\CODE\Form\Elements\Text')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-        $element->expects($this->any())
-            ->method('getValue')
-            ->willReturn('Lorem')
-        ;
-
-
-
         $validator = new \CODE\Form\Validator\Validator();
         $validator->addRule(array(
-            'element' => $element,
+            'element' => $this->aux,
             'rules' => array(
                 array(
                     'rule' => 'is_required'
