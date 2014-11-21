@@ -17,35 +17,32 @@ foreach($stmt->fetchAll(PDO::FETCH_OBJ) as $categoria){
 
 
 
-$validator = new \CODE\Form\Validator\Validator();
+$validator = new \CODE\Validation\Validation();
 //Form Protótipo
 $form =  new \CODE\Form\Form($validator);
 
 //Formulário de Cadastro
 $formCadastro = clone $form;
 
-$fieldset1 = new \CODE\Form\Elements\Fieldset('field1', 'Formulário de Cadastro');
 
-$nome = new \CODE\Form\Elements\Text('nome');
-$nome->setLabel('Nome');
-$fieldset1->add($nome);
+$nome = new \CODE\Form\Elements\Input();
+$nome->setName('nome');
+$formCadastro->add($nome);
 
-$valor = new \CODE\Form\Elements\Text('valor');
-$valor->setLabel('Valor');
-$fieldset1->add($valor);
+$valor = new \CODE\Form\Elements\Input();
+$valor->setName('valor');
+$formCadastro->add($valor);
 
-$descricao = new \CODE\Form\Elements\Text('descricao');
-$descricao->setLabel('Descrição');
-$fieldset1->add($descricao);
+$descricao = new \CODE\Form\Elements\TextArea();
+$descricao->setName('descricao');
+$formCadastro->add($descricao);
 
-$categoria = new \CODE\Form\Elements\Select('categoria', $options);
-$categoria->setLabel('Categoria');
-$fieldset1->add($categoria);
+$categoria = new \CODE\Form\Elements\Select();
+$categoria->setName('categoria')->setOptions($options);
+$formCadastro->add($categoria);
 
-$formCadastro->add($fieldset1);
-
-
-$submit = new CODE\Form\Elements\Submit('enviar', 'Enviar');
+$submit = new CODE\Form\Elements\Input();
+$submit->setName('enviar')->setValue('Enviar')->setType('Submit');
 $formCadastro->add($submit);
 
 
@@ -58,17 +55,17 @@ $dados = [
 $formCadastro->populate($dados);
 
 
-$formCadastro->getValidator()->addRule(
+$formCadastro->getValidator()->setRules(
     array(
         'element' => $nome,
         'rules' => array(
             array(
-                'rule' => 'is_required'
+                'rule' => 'required'
             )
         )
     )
 );
-$formCadastro->getValidator()->addRule(
+$formCadastro->getValidator()->setRules(
     array(
         'element' => $valor,
         'rules' => array(
@@ -78,7 +75,7 @@ $formCadastro->getValidator()->addRule(
         )
     )
 );
-$formCadastro->getValidator()->addRule(
+$formCadastro->getValidator()->setRules(
     array(
         'element' => $descricao,
         'rules' => array(
@@ -151,16 +148,18 @@ var_dump($formCadastro->getValidator()->validate());
 
     <div class="row">
         <div class="col-lg-6">
-            <?php if($formCadastro->getValidator()->getMessages()):?>
+            <?php if(!$formCadastro->getValidator()->is_valid()):?>
             <ul>
-                <?php echo $formCadastro->getValidator()->getMessages();?>
+                <?php echo $formCadastro->getValidator()->validation_messages();?>
             </ul>
             <?php endif;?>
             <?php echo $formCadastro->openTag();?>
 
-            <?php echo $formCadastro->createField('field1');?>
-
-            <?php echo $formCadastro->createField('enviar');?>
+            <?php echo $formCadastro->renderField('nome');?>
+            <?php echo $formCadastro->renderField('valor');?>
+            <?php echo $formCadastro->renderField('descricao');?>
+            <?php echo $formCadastro->renderField('categoria');?>
+            <?php echo $formCadastro->renderField('enviar');?>
 
             <?php echo $formCadastro->closeTag();?>
         </div>

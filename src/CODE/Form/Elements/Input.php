@@ -2,23 +2,24 @@
 /**
  * Created by PhpStorm.
  * User: rogerio
- * Date: 13/11/14
- * Time: 20:10
+ * Date: 11/11/14
+ * Time: 21:45
  */
 
 namespace CODE\Form\Elements;
 
 use \CODE\Form\Elements\Interfaces\ElementInterface;
 
-class Select implements ElementInterface
+class Input implements ElementInterface
 {
 
+    private $type;
     private $name;
-    private $options = [];
+    private $value;
     private $attributes = [];
 
 
-    public function setAttributes($attributes)
+    public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
         return $this;
@@ -40,15 +41,26 @@ class Select implements ElementInterface
         return $this->name;
     }
 
-    public function setOptions(array $options)
+    public function setType($type)
     {
-        $this->options = $options;
+        $this->type = $type;
         return $this;
     }
 
-    public function getOptions()
+    public function getType()
     {
-        return $this->options;
+        return $this->type;
+    }
+
+    public function setValue($value)
+    {
+        $this->value = $value;
+        return $this;
+    }
+
+    public function getValue()
+    {
+        return $this->value;
     }
 
 
@@ -56,10 +68,16 @@ class Select implements ElementInterface
 
     public function create()
     {
-        $tag = "<select";
+        $tag = "<input";
+
+        if($this->getType() != null)
+            $tag.=" type=\"{$this->getType()}\"";
 
         if($this->getName() != null)
             $tag.=" name=\"{$this->getName()}\"";
+
+        if($this->getValue() != null)
+            $tag.=" value=\"{$this->getValue()}\"";
 
         if(count($this->getAttributes()) > 0){
             foreach($this->getAttributes() as $attr => $value){
@@ -68,12 +86,6 @@ class Select implements ElementInterface
         }
 
         $tag.=">";
-
-        foreach($this->getOptions() as $key => $value){
-            $tag.="<option value=\"{$key}\">{$value}</option>";
-        }
-
-        $tag.="</select>";
 
         return $tag;
     }

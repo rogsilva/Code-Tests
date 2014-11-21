@@ -1,39 +1,77 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: rogerio
+ * Date: 12/11/14
+ * Time: 23:07
+ */
 
 namespace CODE\Form\Elements;
 
+use \CODE\Form\Elements\Interfaces\ElementInterface;
 
-class TextArea extends AbstractElement
+class TextArea implements ElementInterface
 {
-    public function __construct($name, $value = null)
-    {
-        parent::__construct(null, $name, $value);
 
+    private $name;
+    private $value;
+    private $attributes = [];
+
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+        return $this;
     }
 
-    public function mount()
+    public function getAttributes()
     {
-        $tag = "";
-        if($this->label != null)
-            $tag.= "<label>$this->label</label>\n";
+        return $this->attributes;
+    }
 
-        $tag.= "<textarea name=\"{$this->name}\"";
-        if(count($this->attributes) > 0){
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
 
-            foreach($this->attributes as $prop => $value){
+    public function getName()
+    {
+        return $this->name;
+    }
 
-                $tag.= " {$prop}=\"{$value}\"";
+    public function setValue($value)
+    {
+        $this->value = $value;
+        return $this;
+    }
 
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+
+
+    public function create()
+    {
+        $tag = "<textarea";
+
+        if($this->getName() != null)
+            $tag.=" name=\"{$this->getName()}\"";
+
+        if(count($this->getAttributes()) > 0){
+            foreach($this->getAttributes() as $attr => $value){
+                $tag.=" {$attr}=\"{$value}\"";
             }
-
         }
-        $tag.="> {$this->value} </textarea>\n";
+
+        $tag.=">";
+
+        if($this->getValue() != null)
+            $tag.="{$this->getValue()}";
+
+        $tag.="</textarea>";
 
         return $tag;
-    }
-
-    public function add(AbstractElement $element){
-        throw new \InvalidArgumentException('Não é possível adicionar elementos neste tipo de elemento!');
     }
 } 

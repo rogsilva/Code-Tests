@@ -1,20 +1,12 @@
 <?php
 
 namespace CODE\Form\Interfaces;
-
-use CODE\Form\Elements\AbstractElement;
+use \CODE\Form\Elements\Interfaces\ElementInterface;
 
 interface FormInterface
 {
-
-    public function openTag();
-
-    public function closeTag();
-
-    public function add(AbstractElement $element);
-
-    public function render();
-
-    public function createField($name);
-
-} 
+        public function openTag();
+        public function closeTag();
+        public function render();
+        public function add(ElementInterface $element);
+}
