@@ -101,7 +101,7 @@ var_dump($formCadastro->getValidator()->validate());
     <meta name="description" content="Aula Code Education - Foundation">
     <meta name="author" content="Rogério SIlva">
 
-    <title>Code Education - Design Patterns</title>
+    <title>Tests</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<?php echo "http://".$_SERVER['HTTP_HOST']?>/css/bootstrap.css" rel="stylesheet">
